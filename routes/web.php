@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/list','CostController@index');
+Route::get('/accounts','CostController@index');
