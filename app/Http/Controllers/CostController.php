@@ -36,7 +36,18 @@ class CostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cost = new Cost();
+        $cost->TransectionDate = $request->transectionDate;
+        $cost->Type = $request->type;
+        $cost->Description = $request->description;
+        $cost->Amount = $request->amount;
+
+        $cost->save();
+
+        $costList = Cost::all();
+        return $costList;
+        // return redirect()->route('accounts');
+
     }
 
     /**

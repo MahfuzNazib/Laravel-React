@@ -5,9 +5,36 @@ import axios from 'axios';
 class Accounts extends Component{
     constructor(){
         super();
+        this.onChangeDataSave = this.onChangeDataSave.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
-            costs : []
+            costs : [],
+            transectionDate : '',
+            type : '',
+            amount : '',
+            description : ''
         }
+    }
+
+    onChangeDataSave(e){
+        this.setState({
+            transectionDate : e.target.value,
+            type : e.target.value,
+            amount : e.target.value,
+            description : e.target.value
+        });
+    }
+
+    onSubmit(e){
+        e.preventDefault();
+        const cost = {
+            transectionDate : this.state.transectionDate,
+            type : this.state.type,
+            amount : this.state.amount,
+            description : this.state.description
+        }
+        axios.post('http://localhost:8000/accounts/store', cost)
+        .then(response => console.log(response.data));
     }
 
     componentDidMount(){
@@ -33,12 +60,21 @@ class Accounts extends Component{
                                 </center>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form onSubmit = {this.onSubmit}>
                                     <label>Transedtion Date</label>
-                                    <input type="date" className="form-control" name="TransectionDate" id="TransectionDate" />
+                                    <input type="date" 
+                                        className="form-control" 
+                                        name="TransectionDate"
+                                        value={this.state.transectionDate}
+                                        onChange = {this.onChangeDataSave}
+                                        id="TransectionDate" />
     
                                     <label>Type</label>
-                                    <select className="form-control" name="type" id="type">
+                                    <select className="form-control" 
+                                        name="type"
+                                        value={this.type}
+                                        onChange={this.onChangeDataSave} 
+                                        id="type">
                                         <option selected disabled>Select Type Here</option>
                                         <option>University</option>
                                         <option>Housing</option>
@@ -47,16 +83,31 @@ class Accounts extends Component{
                                     </select>
     
                                     <label>Amount</label>
-                                    <input type="number" className="form-control" name="amount" id="amount" />
+                                    <input type="number" 
+                                        className="form-control" 
+                                        name="amount"
+                                        value={this.amount}
+                                        onChange={this.onChangeDataSave} 
+                                        id="amount" />
                                     <label>Description</label>
-                                    <textarea className="form-control" name="description" id="description" />
+                                    <textarea 
+                                        className="form-control" 
+                                        name="description"
+                                        value={this.description}
+                                        onChange={this.onChangeDataSave} 
+                                        id="description" />
+                                    <br/>
+                                    <input type="submit" className="btn btn-primary" value="Save Transection"/>
+
                                 </form>
                             </div>
                             <div class="card-footer">
                                 <center>
-                                    <input type="submit" className="btn btn-primary" value="Save Transection"/>
+                                    {/* <input type="submit" className="btn btn-primary" value="Save Transection"/> */}
                                 </center>
                             </div>
+                            {/* </form> */}
+
                         </div>
                     </div>
     

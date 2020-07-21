@@ -15,4 +15,9 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/accounts','CostController@index');
+Route::get('/accounts','CostController@index')->name('accounts');
+Route::post('/accounts/store','CostController@store');
+
+// Movies Route
+Route::get('/movieList','MovieController@index');
+Route::post('/movieList/store','MovieController@store');
