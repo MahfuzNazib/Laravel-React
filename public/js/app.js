@@ -70935,6 +70935,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70961,6 +70963,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var MovieList = /*#__PURE__*/function (_Component) {
   _inherits(MovieList, _Component);
 
@@ -70976,40 +70979,21 @@ var MovieList = /*#__PURE__*/function (_Component) {
       movieList: [],
       movieName: '',
       moviePrice: '',
-      releaseDate: ''
+      releaseDate: '',
+      id: '',
+      save: true,
+      update: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleMoviePrice = _this.handleMoviePrice.bind(_assertThisInitialized(_this));
     _this.handleReleadeDate = _this.handleReleadeDate.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // Get All Data from DataBase
+
 
   _createClass(MovieList, [{
-    key: "handleChange",
-    value: function handleChange(e) {
-      console.log(e.target.value);
-      this.setState({
-        movieName: e.target.value
-      });
-    }
-  }, {
-    key: "handleMoviePrice",
-    value: function handleMoviePrice(e) {
-      console.log(e.target.value);
-      this.setState({
-        moviePrice: e.target.value
-      });
-    }
-  }, {
-    key: "handleReleadeDate",
-    value: function handleReleadeDate(e) {
-      console.log(e.target.value);
-      this.setState({
-        releaseDate: e.target.value
-      });
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -71023,26 +71007,133 @@ var MovieList = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState({
+        movieName: e.target.value
+      });
+    }
+  }, {
+    key: "handleMoviePrice",
+    value: function handleMoviePrice(e) {
+      this.setState({
+        moviePrice: e.target.value
+      });
+    }
+  }, {
+    key: "handleReleadeDate",
+    value: function handleReleadeDate(e) {
+      this.setState({
+        releaseDate: e.target.value
+      });
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
       var _this3 = this;
 
-      e.preventDefault();
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/movieList/store', {
-        movieName: this.state.movieName,
-        moviePrice: this.state.moviePrice,
-        releaseDate: this.state.releaseDate
-      }).then(function (res) {
-        console.log(res.data);
-
+      console.log(id);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("http://localhost:8000/movieList/delete/".concat(id)).then(function (response) {
         _this3.setState({
-          movieList: res.data
+          movieList: response.data
         });
       });
     }
   }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var _this4 = this;
+
+      console.log(id);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("http://localhost:8000/movieList/edit/".concat(id)).then(function (response) {
+        _this4.setState({
+          // movieList : response.data
+          movieName: response.data['movieName'],
+          moviePrice: response.data['price'],
+          releaseDate: response.data['releaseDate'],
+          id: response.data['id']
+        });
+      });
+    }
+  }, {
+    key: "changeState",
+    value: function changeState() {
+      this.setState({
+        save: false,
+        update: true
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+
+      if (!this.state.save) {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("http://localhost:8000/movieList/edit/".concat(id), {
+          movieName: this.state.movieName,
+          moviePrice: this.state.moviePrice,
+          releaseDate: this.state.releaseDate
+        }).then(function (response) {
+          _this5.setState({
+            movieList: response.data
+          });
+        });
+        console.log(this.state.movieList);
+      } else if (this.state.save) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/movieList/store', {
+          movieName: this.state.movieName,
+          moviePrice: this.state.moviePrice,
+          releaseDate: this.state.releaseDate
+        }).then(function (res) {
+          console.log(res.data);
+
+          _this5.setState({
+            movieList: res.data,
+            movieName: '',
+            moviePrice: '',
+            releaseDate: ''
+          });
+        });
+        console.log('Save Button Clicked');
+        console.log(this.state.save);
+      }
+    }
+  }, {
+    key: "getButtonController",
+    value: function getButtonController() {
+      var _this6 = this;
+
+      var output = null;
+
+      if (this.state.id) {
+        console.log('ID : ' + this.state.id);
+        output = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "submit",
+          onClick: function onClick() {
+            return _this6.changeState();
+          },
+          className: "btn btn-primary",
+          value: "Update"
+        }));
+        return output;
+      } else {
+        console.log('ID : নাই');
+        output = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "submit",
+          className: "btn btn-success",
+          value: "Save"
+        }));
+        return output;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this7 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container bg card"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
@@ -71068,24 +71159,22 @@ var MovieList = /*#__PURE__*/function (_Component) {
         onChange: this.handleReleadeDate,
         value: this.state.releaseDate,
         className: "form-control"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        className: "btn btn-primary",
-        value: "Save Movie Data"
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, this.getButtonController()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "MovieName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "ReleaseDate"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, // this.state.movieList.map(
-      //     data => 
-      //     <tr>
-      //         <td>{data.movieName}</td>
-      //         <td>{data.price}</td>
-      //         <td>{data.releaseDate}</td>
-      //     </tr>
-      // )
-      this.state.movieList.map(function (movieList) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, movieList.movieName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, movieList.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, movieList.releaseDate));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "MovieName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "ReleaseDate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.movieList.map(function (movieList) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, movieList.movieName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, movieList.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, movieList.releaseDate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-primary",
+          onClick: function onClick() {
+            return _this7.handleEdit(movieList.id);
+          }
+        }, ":"), " |", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-danger",
+          onClick: function onClick() {
+            return _this7.handleDelete(movieList.id);
+          }
+        }, "X")));
       }))))));
     }
   }]);
