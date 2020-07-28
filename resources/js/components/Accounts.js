@@ -5,44 +5,73 @@ import axios from 'axios';
 class Accounts extends Component{
     constructor(){
         super();
-        this.onChangeDataSave = this.onChangeDataSave.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             costs : [],
             transectionDate : '',
             type : '',
             amount : '',
             description : ''
-        }
+        };
+        this.handleTransectionDate = this.handleTransectionDate.bind(this);
+        this.handleType = this.handleType.bind(this);
+        this.handleAmount = this.handleAmount.bind(this);
+        this.handleDescription = this.handleDescription.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    onChangeDataSave(e){
-        this.setState({
-            transectionDate : e.target.value,
-            type : e.target.value,
-            amount : e.target.value,
-            description : e.target.value
-        });
-    }
-
-    onSubmit(e){
-        e.preventDefault();
-        const cost = {
-            transectionDate : this.state.transectionDate,
-            type : this.state.type,
-            amount : this.state.amount,
-            description : this.state.description
-        }
-        axios.post('http://localhost:8000/accounts/store', cost)
-        .then(response => console.log(response.data));
-    }
-
+    //GET All Data From DB
     componentDidMount(){
         axios.get('http://localhost:8000/accounts')
         .then(response => {
             this.setState({costs:response.data});
         })
     }
+
+    handleTransectionDate(e){
+        this.setState({
+            transectionDate : e.target.value,
+        });
+    }
+
+    handleType(e){
+        this.setState({
+            type : e.target.value
+        })
+    }
+
+    handleAmount(e){
+        this.setState({
+            amount : e.target.value
+        })
+    }
+
+    handleDescription(e){
+        this.setState({
+            description : e.target.value
+        })
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        axios.post('http://localhost:8000/accounts/store', {
+            transectionDate : this.state.transectionDate,
+            type : this.state.type,
+            amount : this.state.amount,
+            description : this.state.description,
+        })
+        .then(res => {
+            console.log(res.data);
+            this.setState({
+                costs : res.data,
+                transectionDate : '',
+                type : '',
+                amount : '',
+                description : ''
+            })
+        });
+    }
+
+    
     render(){
         return(
             <div className="container bg card">
@@ -60,20 +89,20 @@ class Accounts extends Component{
                                 </center>
                             </div>
                             <div class="card-body">
-                                <form onSubmit = {this.onSubmit}>
+                                <form onSubmit = {this.handleSubmit}>
                                     <label>Transedtion Date</label>
                                     <input type="date" 
                                         className="form-control" 
                                         name="TransectionDate"
                                         value={this.state.transectionDate}
-                                        onChange = {this.onChangeDataSave}
+                                        onChange = {this.handleTransectionDate}
                                         id="TransectionDate" />
     
                                     <label>Type</label>
                                     <select className="form-control" 
                                         name="type"
                                         value={this.type}
-                                        onChange={this.onChangeDataSave} 
+                                        onChange={this.handleType} 
                                         id="type">
                                         <option selected disabled>Select Type Here</option>
                                         <option>University</option>
@@ -87,27 +116,25 @@ class Accounts extends Component{
                                         className="form-control" 
                                         name="amount"
                                         value={this.amount}
-                                        onChange={this.onChangeDataSave} 
+                                        onChange={this.handleAmount} 
                                         id="amount" />
                                     <label>Description</label>
                                     <textarea 
                                         className="form-control" 
                                         name="description"
                                         value={this.description}
-                                        onChange={this.onChangeDataSave} 
+                                        onChange={this.handleDescription} 
                                         id="description" />
                                     <br/>
-                                    <input type="submit" className="btn btn-primary" value="Save Transection"/>
-
+                                    <center>
+                                        <input type="submit" className="btn btn-primary" value="Save Transection"/>
+                                    </center>
                                 </form>
                             </div>
                             <div class="card-footer">
                                 <center>
-                                    {/* <input type="submit" className="btn btn-primary" value="Save Transection"/> */}
                                 </center>
                             </div>
-                            {/* </form> */}
-
                         </div>
                     </div>
     
@@ -117,7 +144,7 @@ class Accounts extends Component{
                                 <center>All Transection List</center>
                             </div>
                             <div className="card-body">
-                                <table className="table">
+                                <table className="table  table-hover" width="80%">
                                     <thead>
                                         <tr>
                                             <th>TrnxDate</th>
@@ -137,10 +164,10 @@ class Accounts extends Component{
                                                         <td>{costs.Amount}</td>
                                                         <td>
                                                             <button className="btn btn-info">
-                                                               <h4>:</h4>
+                                                               Edit
                                                             </button> | 
                                                             <button className="btn btn-danger">
-                                                                X
+                                                                Delete
                                                             </button>
                                                         </td>
                                                     </tr>

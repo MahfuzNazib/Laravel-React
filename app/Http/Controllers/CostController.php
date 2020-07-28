@@ -14,7 +14,7 @@ class CostController extends Controller
      */
     public function index()
     {
-        $cost = Cost::all();
+        $cost = Cost::orderBy('id','DESC')->get();
         return $cost;
     }
 
@@ -44,7 +44,7 @@ class CostController extends Controller
 
         $cost->save();
 
-        $costList = Cost::all();
+        $costList = Cost::orderBy('id','DESC')->get();
         return $costList;
         // return redirect()->route('accounts');
 

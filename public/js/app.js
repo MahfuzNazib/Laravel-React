@@ -70523,8 +70523,6 @@ var Accounts = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, Accounts);
 
     _this = _super.call(this);
-    _this.onChangeDataSave = _this.onChangeDataSave.bind(_assertThisInitialized(_this));
-    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.state = {
       costs: [],
       transectionDate: '',
@@ -70532,34 +70530,16 @@ var Accounts = /*#__PURE__*/function (_Component) {
       amount: '',
       description: ''
     };
+    _this.handleTransectionDate = _this.handleTransectionDate.bind(_assertThisInitialized(_this));
+    _this.handleType = _this.handleType.bind(_assertThisInitialized(_this));
+    _this.handleAmount = _this.handleAmount.bind(_assertThisInitialized(_this));
+    _this.handleDescription = _this.handleDescription.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } //GET All Data From DB
+
 
   _createClass(Accounts, [{
-    key: "onChangeDataSave",
-    value: function onChangeDataSave(e) {
-      this.setState({
-        transectionDate: e.target.value,
-        type: e.target.value,
-        amount: e.target.value,
-        description: e.target.value
-      });
-    }
-  }, {
-    key: "onSubmit",
-    value: function onSubmit(e) {
-      e.preventDefault();
-      var cost = {
-        transectionDate: this.state.transectionDate,
-        type: this.state.type,
-        amount: this.state.amount,
-        description: this.state.description
-      };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/accounts/store', cost).then(function (response) {
-        return console.log(response.data);
-      });
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -70567,6 +70547,57 @@ var Accounts = /*#__PURE__*/function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/accounts').then(function (response) {
         _this2.setState({
           costs: response.data
+        });
+      });
+    }
+  }, {
+    key: "handleTransectionDate",
+    value: function handleTransectionDate(e) {
+      this.setState({
+        transectionDate: e.target.value
+      });
+    }
+  }, {
+    key: "handleType",
+    value: function handleType(e) {
+      this.setState({
+        type: e.target.value
+      });
+    }
+  }, {
+    key: "handleAmount",
+    value: function handleAmount(e) {
+      this.setState({
+        amount: e.target.value
+      });
+    }
+  }, {
+    key: "handleDescription",
+    value: function handleDescription(e) {
+      this.setState({
+        description: e.target.value
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/accounts/store', {
+        transectionDate: this.state.transectionDate,
+        type: this.state.type,
+        amount: this.state.amount,
+        description: this.state.description
+      }).then(function (res) {
+        console.log(res.data);
+
+        _this3.setState({
+          costs: res.data,
+          transectionDate: '',
+          type: '',
+          amount: '',
+          description: ''
         });
       });
     }
@@ -70588,19 +70619,19 @@ var Accounts = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, "Add New Transection")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         "class": "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.onSubmit
+        onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Transedtion Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "date",
         className: "form-control",
         name: "TransectionDate",
         value: this.state.transectionDate,
-        onChange: this.onChangeDataSave,
+        onChange: this.handleTransectionDate,
         id: "TransectionDate"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         className: "form-control",
         name: "type",
         value: this.type,
-        onChange: this.onChangeDataSave,
+        onChange: this.handleType,
         id: "type"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         selected: true,
@@ -70610,19 +70641,19 @@ var Accounts = /*#__PURE__*/function (_Component) {
         className: "form-control",
         name: "amount",
         value: this.amount,
-        onChange: this.onChangeDataSave,
+        onChange: this.handleAmount,
         id: "amount"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         className: "form-control",
         name: "description",
         value: this.description,
-        onChange: this.onChangeDataSave,
+        onChange: this.handleDescription,
         id: "description"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         className: "btn btn-primary",
         value: "Save Transection"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         "class": "card-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-7"
@@ -70633,13 +70664,14 @@ var Accounts = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, "All Transection List")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table"
+        className: "table  table-hover",
+        width: "80%"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "TrnxDate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.costs.map(function (costs) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, costs.TransectionDate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, costs.Type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, costs.Amount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-info"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, ":")), " |", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, "Edit"), " |", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-danger"
-        }, "X")));
+        }, "Delete")));
       }))))))));
     }
   }]);
@@ -71169,7 +71201,7 @@ var MovieList = /*#__PURE__*/function (_Component) {
           onClick: function onClick() {
             return _this7.handleEdit(movieList.id);
           }
-        }, ":"), " |", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, "::"), " |", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-danger",
           onClick: function onClick() {
             return _this7.handleDelete(movieList.id);

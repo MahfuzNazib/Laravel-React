@@ -156,7 +156,7 @@ class MovieList extends Component{
                             <label>Movie Name</label>
                             <input type="text"
                                 onChange={this.handleChange}
-                                value = {this.state.movieName}
+                                value = {this.state.movieName}     
                                 className="form-control"/>
 
                             <label>Movie Cost</label>
@@ -202,7 +202,7 @@ class MovieList extends Component{
                                             <td>{movieList.releaseDate}</td>
                                             <td>
                                                 <button className="btn btn-primary" onClick = {() => this.handleEdit(movieList.id)}>
-                                                    :
+                                                    ::
                                                 </button> | 
                                                 <button className="btn btn-danger" onClick = {() => this.handleDelete(movieList.id)}>
                                                     X
