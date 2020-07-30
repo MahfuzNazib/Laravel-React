@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Pagination from 'react-js-pagination';
 

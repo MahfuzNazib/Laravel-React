@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 import '../style.css';
+import jsPDF from 'jspdf';
+import { data } from 'jquery';
 
 class Home extends Component{
     constructor(){
@@ -15,6 +17,7 @@ class Home extends Component{
         }
     }
 
+    //Get All Cost From DB By Group Counting SUM
     componentDidMount(){
         axios.get('http://localhost:8000/cc')
         .then(response => {
@@ -26,12 +29,25 @@ class Home extends Component{
                 housingCost : response.data['housingCost'],
                 fathersCost : response.data['fathersCost'],
                 othersCost : response.data['othersCost'],
-
             })
         })
     }
 
+    //Download a PDF File with Cost 
+    totalCostPDFGenerator(){
+        var doc = new jsPDF('p', 'pt');
+        doc.text(180,60, 'Transections Total Cost[MAIDUL]');
+        doc.text(200,100, 'Total Cost : '+this.state.totalCost+' Taka');
+        doc.text(200,140, 'University Cost : '+this.state.universityCost+' Taka');
+        doc.text(200,180, 'Housing Cost : '+this.state.housingCost+' Taka');
+        doc.text(200,220, 'Father\'s Cost : '+this.state.fathersCost+' Taka');
+        doc.text(200,260, 'Other\'s Cost : '+this.state.othersCost+' Taka');
+
+        doc.save('TotalCost.pdf');
+    }
+
     
+    //Render Function
     render(){
     return(
         <div>
@@ -143,8 +159,9 @@ class Home extends Component{
                 <br/>
                 <div className="row">
                     <div className="col-sm-12">
+                        {/* Download Button */}
                         <center>
-                            <button className="downloadButton">Download PDF</button>
+                            <button className="downloadButton" onClick = {() => this.totalCostPDFGenerator()}>Download PDF</button>
                         </center>
                     </div>
                 </div>

@@ -16,10 +16,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Route::get('/', 'HomeController@index');
-
 Route::get('/cc','HomeController@index');
-
 
 //Accounts Route
 Route::get('/accounts','CostController@index')->name('accounts');
