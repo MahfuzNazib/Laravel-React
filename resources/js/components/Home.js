@@ -140,6 +140,14 @@ class Home extends Component{
                     <div className="col-sm-2"></div>
                     
                 </div>
+                <br/>
+                <div className="row">
+                    <div className="col-sm-12">
+                        <center>
+                            <button className="downloadButton">Download PDF</button>
+                        </center>
+                    </div>
+                </div>
                 <br/><br/>
             </div>
         </div>

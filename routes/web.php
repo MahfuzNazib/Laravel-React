@@ -28,4 +28,6 @@ Route::get('/accounts/edit/{id}','CostController@edit')->name('accounts.edit');
 Route::post('/accounts/edit/{id}','CostController@update')->name('accounts.update');
 Route::get('/accounts/delete/{id}','CostController@destroy')->name('accounts.destroy');
 
+//Get All Transection List on Different Page
+Route::get('/transectionList','CostController@transectionList')->name('transectionList');
 

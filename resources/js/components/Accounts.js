@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 class Accounts extends Component{
     constructor(){
@@ -170,6 +172,14 @@ class Accounts extends Component{
         }
     }
 
+    //Genarate PDF Function
+    jsPDGGenerator(){
+        const doc = new jsPDF();
+        doc.text(20,20,'All Transection List');
+        doc.autoTable({html:'#tdata'});
+        doc.save('Data.pdf');
+    }
+
     
     render(){
         return(
@@ -195,6 +205,7 @@ class Accounts extends Component{
                                         name="TransectionDate"
                                         value={this.state.transectionDate}
                                         onChange = {this.handleTransectionDate}
+                                        onFocus
                                         id="TransectionDate" />
     
                                     <label>Type</label>
@@ -243,14 +254,14 @@ class Accounts extends Component{
                                 <center>All Transection List</center>
                             </div>
                             <div className="card-body">
-                                <table className="table  table-hover" width="80%">
+                                <table className="table  table-hover" width="100%" id="tdata">
                                     <thead>
                                         <tr>
-                                            <th>TrnxDate</th>
-                                            <th>Type</th>
-                                            <th>Amount</th>
-                                            <th>Description</th>
-                                            <th>Action</th>
+                                            <th >TrnxDate</th>
+                                            <th >Type</th>
+                                            <th >Amount</th>
+                                            <th >Description</th>
+                                            <th >Action</th>
                                         </tr>
                                     </thead>
 
@@ -277,6 +288,7 @@ class Accounts extends Component{
                                         }
                                     </tbody>
                                 </table>
+                                <button className="downloadButton" onClick = {() => this.jsPDGGenerator()}>Download PDF</button>
                             </div>
                         </div>
                     </div>

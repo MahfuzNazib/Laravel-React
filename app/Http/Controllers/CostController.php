@@ -109,4 +109,9 @@ class CostController extends Controller
         $costList = Cost::orderBy('id','DESC')->get();
         return $costList;
     }
+
+    public function transectionList(){
+        $cost = Cost::all();
+        return $cost;
+    }
 }

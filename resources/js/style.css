@@ -28,3 +28,22 @@
     cursor: pointer;
     transition-duration: 0.5s;
 }
+
+.downloadButton{
+    height: auto;
+    width: auto;
+    background-color: rgb(6, 59, 94);
+    color: white;
+    font-size: medium;
+    cursor: pointer;
+    border: none;
+    font-family: serif;
+    transition-duration: 0.5s;
+}
+
+.downloadButton:hover{
+    background-color: rgb(11, 79, 156);
+    border-radius: 7px;
+    transition-duration: 0.5s;
+
+}

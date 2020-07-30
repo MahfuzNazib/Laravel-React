@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Header from './Header';
 import Home from './Home';
 import Accounts from './Accounts';
+import TransectionList from './TransectionList';
 
 import {
     BrowserRouter as Router,
@@ -23,6 +24,10 @@ function Index() {
 
                     <Route exact path = "/accounts">
                         <Accounts/>
+                    </Route>
+
+                    <Route exact path = "/transectionList">
+                        <TransectionList/>
                     </Route>
                 </Switch>
             </Router>

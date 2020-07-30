@@ -23,6 +23,14 @@ function Navigation(){
 
                 <li className="nav-item navbar-dark">
                     <a className="nav-link">
+                        <Link to="/transectionList">
+                            <button className="header-button">TransectionList</button>
+                        </Link>
+                    </a>
+                </li>
+
+                <li className="nav-item navbar-dark">
+                    <a className="nav-link">
                         <Link to="/logout">
                             <button className="btn btn-danger">Logout</button>
                         </Link>
