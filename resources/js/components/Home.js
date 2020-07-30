@@ -1,8 +1,38 @@
-import React from 'react';
+import React,{Component} from 'react';
 import ReactDom from 'react-dom';
+import axios from 'axios';
 import '../style.css';
 
-function Home(){
+class Home extends Component{
+    constructor(){
+        super();
+        this.state = {
+            totalCost : '',
+            universityCost : '',
+            housingCost : '',
+            fathersCost : '',
+            othersCost : ''
+        }
+    }
+
+    componentDidMount(){
+        axios.get('http://localhost:8000/cc')
+        .then(response => {
+            console.log('Total Cost is : '+this.state.totalCost)
+            console.log(response.data);
+            this.setState({
+                totalCost : response.data['totalCost'],
+                universityCost : response.data['universityCost'],
+                housingCost : response.data['housingCost'],
+                fathersCost : response.data['fathersCost'],
+                othersCost : response.data['othersCost'],
+
+            })
+        })
+    }
+
+    
+    render(){
     return(
         <div>
             <div className="container bg card">
@@ -25,7 +55,7 @@ function Home(){
                         </div>
                         <div class="card-body txt">
                             <center>
-                                158222255
+                                {this.state.totalCost}
                             </center>
                         </div>
                     </div>
@@ -48,7 +78,7 @@ function Home(){
                         </div>
                             <div class="card-body txt">
                                 <center>
-                                    158222255
+                                    {this.state.universityCost}
                                 </center>
                             </div>
                         </div>
@@ -64,7 +94,7 @@ function Home(){
                             </div>
                             <div class="card-body txt">
                                 <center>
-                                    158222255
+                                    {this.state.housingCost}
                                 </center>
                             </div>
                         </div>
@@ -86,7 +116,7 @@ function Home(){
                             </div>
                             <div class="card-body txt">
                                 <center>
-                                    158222255
+                                    {this.state.fathersCost}
                                 </center>
                             </div>
                         </div>
@@ -102,7 +132,7 @@ function Home(){
                             </div>
                             <div class="card-body txt">
                                 <center>
-                                    158222255
+                                    {this.state.othersCost}
                                 </center>
                             </div>
                         </div>
@@ -114,5 +144,6 @@ function Home(){
             </div>
         </div>
     )
+}
 }
 export default Home

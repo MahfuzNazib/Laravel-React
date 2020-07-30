@@ -46,7 +46,6 @@ class CostController extends Controller
 
         $costList = Cost::orderBy('id','DESC')->get();
         return $costList;
-        // return redirect()->route('accounts');
 
     }
 
@@ -69,7 +68,8 @@ class CostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cost = Cost::find($id);
+        return $cost;
     }
 
     /**
@@ -81,7 +81,18 @@ class CostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cost = Cost::find($id);
+
+        $cost->TransectionDate = $request->transectionDate;
+        $cost->Type = $request->type;
+        $cost->Description = $request->description;
+        $cost->Amount = $request->amount;
+
+        $cost->update();
+
+        $costList = Cost::orderBy('id','DESC')->get();
+        return $costList;
+        
     }
 
     /**
@@ -92,6 +103,10 @@ class CostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cost = Cost::find($id);
+        $cost->delete();
+
+        $costList = Cost::orderBy('id','DESC')->get();
+        return $costList;
     }
 }

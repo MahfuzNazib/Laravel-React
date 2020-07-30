@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import Header from './Header';
 import Home from './Home';
 import Accounts from './Accounts';
-import List from './List';
-import MovieList from './MovieList';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -24,15 +23,6 @@ function Index() {
 
                     <Route exact path = "/accounts">
                         <Accounts/>
-                    </Route>
-
-                    <Route exact path = "/list">
-                        <List/>
-                    </Route>
-
-                    {/* Movie List Route */}
-                    <Route exact path = "/movieList">
-                        <MovieList/>
                     </Route>
                 </Switch>
             </Router>

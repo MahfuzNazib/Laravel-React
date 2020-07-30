@@ -5,33 +5,18 @@ function Navigation(){
     return(
         <div>
             <ul className="navbar-nav mr-auto">
-                <li className="nav-item active navbar-dark ">
+                <li className="nav-item active navbar-light ">
                     <a className="nav-link">
                         <Link to="/">
-                            <button className="btn btn-info">Home</button>
+                            <button className="header-button">Home</button>
                         </Link>
                     </a>
                 </li>
+
                 <li className="nav-item navbar-dark">
                     <a className="nav-link">
                         <Link to="/accounts">
-                            <button className="btn btn-info">Accounts</button>
-                        </Link>
-                    </a>
-                </li>
-
-                <li className="nav-item navbar-dark">
-                    <a className="nav-link">
-                        <Link to="/list">
-                            <button className="btn btn-info">List</button>
-                        </Link>
-                    </a>
-                </li>
-
-                <li className="nav-item navbar-dark">
-                    <a className="nav-link">
-                        <Link to="/movieList">
-                            <button className="btn btn-info">Movie List</button>
+                            <button className="header-button">Accounts</button>
                         </Link>
                     </a>
                 </li>

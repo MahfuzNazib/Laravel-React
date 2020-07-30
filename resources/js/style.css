@@ -11,3 +11,20 @@
     cursor: pointer;
     font-family: Arial;
 }
+
+.header-button {
+    background-color: rgb(59, 57, 57);
+    height: 40px;
+    width: auto;
+    color: white;
+    border: none;
+    transition-duration: 0.5s;
+}
+
+.header-button:hover{
+    background-color: aqua;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}

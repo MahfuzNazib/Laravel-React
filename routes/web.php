@@ -11,22 +11,21 @@
 |
 */
 
+//Home Route
 Route::get('/', function () {
     return view('index');
 });
 
+// Route::get('/', 'HomeController@index');
+
+Route::get('/cc','HomeController@index');
+
+
 //Accounts Route
 Route::get('/accounts','CostController@index')->name('accounts');
 Route::post('/accounts/store','CostController@store')->name('accounts.store');
+Route::get('/accounts/edit/{id}','CostController@edit')->name('accounts.edit');
+Route::post('/accounts/edit/{id}','CostController@update')->name('accounts.update');
+Route::get('/accounts/delete/{id}','CostController@destroy')->name('accounts.destroy');
 
 
-
-// Movies Route
-Route::get('/movieList','MovieController@index');
-Route::post('/movieList/store','MovieController@store');
-
-//Delete a specific Movie 
-Route::get('/movieList/delete/{id}','MovieController@destroy');
-//Edit Movie
-Route::get('/movieList/edit/{id}','MovieController@edit');
-Route::post('/movieList/edit/{id}','MovieController@update');

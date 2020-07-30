@@ -6,7 +6,7 @@ function Header(){
     return(
         <div>
             <nav className = "navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#"><h4>PersonalManager</h4></a>
+                <a class="navbar-brand" href="/"><h4>PersonalManager</h4></a>
                 <Navigation />
             </nav>
         </div>
