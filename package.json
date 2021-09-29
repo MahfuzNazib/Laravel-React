@@ -25,7 +25,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
-        "datatables.net": "^1.10.21",
+        "datatables.net": "^1.11.3",
         "jspdf": "^1.5.3",
         "jspdf-autotable": "^3.5.6",
         "react-js-pagination": "^3.0.3",
